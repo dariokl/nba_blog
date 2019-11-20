@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+{% if current_user.is_authenticated %}
+
+<h1 align='center'>
+<a href="{{url_for('core.highlights')}}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Highlights</a>
+<a href="{{url_for('core.news')}}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">News</a>
+</h1>
+
+{% endif %}
+
+{% for daily in day %}
+<ul>
+<div class="" align='center' height="400px" width='300px'>
+  {{daily.name}} {{daily.score}}
+  <img src="{{daily.link}}" alt="" width="50px" height="50px">
+
+</div>
+</ul>
+{% endfor %}
+
+{% endblock %}

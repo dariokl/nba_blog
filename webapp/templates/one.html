@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+</script>
+<div class="jumbotron" align='center'>
+  <h1><strong>{{player.stats.name}}</strong></h1>
+  <img src="{{player.stats.pict}}" alt="">
+  <h2><strong>{{player.team}}</strong></h2>
+
+  <p><strong>Current Seasson Stats</strong></p>
+  <table>
+    <tr>
+
+    <td><strong>GP</strong> : {{player.gamesplayed}}</td>
+    <td><strong>3PM</strong> : {{player.treepm}}</td>
+    <td><strong>FT %</strong> : {{player.ftpct}}</td>
+    <td><strong>STL</strong> : {{player.stl}}</td>
+
+    </tr>
+
+    <tr>
+      <td><strong>Min</strong> : {{player.averageMin}} </td>
+      <td><strong>3PA</strong> : {{player.treeatt}}</td>
+      <td><strong>OREB</strong> : {{player.oreb}}</td>
+      <td><strong>BLK</strong> : {{player.blk}}</td>
+    </tr>
+
+    <tr>
+      <td><strong>FGM</strong> : {{player.fgm}} </td>
+      <td><strong>3P %</strong> : {{player.treepct}}</td>
+      <td><strong>DREB</strong> : {{player.dreb}}</td>
+      <td><strong>TOV</strong> : {{player.tov}}</td>
+    </tr>
+
+    <tr>
+      <td><strong>FGA</strong>: {{player.fga}} </td>
+      <td><strong>FTM</strong> : {{player.ftm}}</td>
+      <td><strong>REB</strong> : {{player.reb}}</td>
+      <td><strong>PPG</strong> : {{player.ppg}}</td>
+    </tr>
+
+    <tr>
+      <td><strong>FG %</strong> : {{player.fgpct}} </td>
+      <td><strong>FTA</strong> : {{player.fta}}</td>
+      <td><strong>AST</strong> : {{player.ast}}</td>
+    </tr>
+
+  </table>
+
+
+  </div>
+
+
+  <div width='200px' height='200px' class="container">
+
+       <div class="row">
+         {% for post in titles %}
+         <div  class="col-md-4">
+           <h2>{{post.title}}</h2>
+           {% if post.text|length < 400 %}
+           <p>{{post.text}}</p>
+           <p><a class="btn btn-secondary" href="{{post.link}}" role="button">View details &raquo;</a></p>
+           {% elif post.text|length > 400 %}
+           <p>{{post.text[:400]}}... click View Details !</p>
+           <p><a class="btn btn-secondary" href="{{post.link}}" role="button">View details &raquo;</a></p>
+           {% endif %}
+         </div>
+         {% endfor %}
+
+
+{% endblock %}

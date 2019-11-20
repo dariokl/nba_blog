@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+ div.bubble {
+   background-color: #ddd;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: #555;
+    margin-bottom: 5px;
+    border: 2px solid Black;
+   }
+     .bubble img {
+       position: right;
+       max-width: 60px;
+       width: 100%;
+       margin-right: 20px;
+       border-radius: 70%;
+
+     }
+     .message {
+       color:black;
+     }
+
+     .right {
+             position: absolute;
+             overflow: auto;
+             left: 40%;
+             right: 0;
+             top: 10;
+             bottom: 30px;
+             width: 70%;
+             height: 90%;
+         }
+      .left {
+             position: absolute;
+             overflow: auto;
+             right: 60%;
+             left: 0;
+             top: 10;
+             bottom: 30px;
+             background: #00000;
+             height: 90%;
+         }
+      .col-sm-4{
+        position: absolute;
+        top : 20;
+      }
+</style>
+
+<div class="container">
+    <div class="right">
+      <div class="col-sm-8">
+          <div id="display-message" class='message-holder'></div>
+        </div>
+      </div>
+    </div>
+    <div class="left">
+      <div class="col-sm-4">
+        <b >Type your message below</b>
+        <div style="padding-top: 5px;"></div>
+        <input type="text" id='user_message' placeholder="Messages">
+        <div style="padding-top: 5px;"></div>
+        <button type="submit" id='send_message'class="btn btn-secondary"><span class="glyphicon glyphicon-send"></span> Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script >
+const username= `{{username}}`;
+var socket = io();
+  socket.on('message', data => {
+  const chatBox = document.getElementById("display-message");
+  const messageContainer = document.createElement('div');
+  messageContainer.classList.add('bubble');
+  const username = document.createElement('span');
+  const message = document.createElement('span');
+  const time_stamp = document.createElement('span');
+  const image = document.createElement('img')
+  image.setAttribute('src', data.profile)
+
+
+  username.classList.add("username")
+  username.innerHTML = data.username + '<br>';
+
+  message.classList.add("message");
+  message.innerHTML = data.msg + '<br>';
+
+  time_stamp.classList.add('time_stamp')
+  time_stamp.innerHTML = data.time_stamp
+
+
+
+
+  messageContainer.appendChild(username);
+  messageContainer.appendChild(message);
+  messageContainer.appendChild(time_stamp);
+  messageContainer.appendChild(image)
+
+  chatBox.appendChild(messageContainer)
+
+});
+socket.on('some-event', data => {
+  console.log(data)
+});
+document.querySelector('#send_message').onclick = () =>{
+  socket.send({'msg' : document.querySelector('#user_message').value,
+  'username' : username});
+};
+
+let message = document.getElementById('user_message');
+message.addEventListener("keyup", function(event){
+  if (event.keyCode==13){
+    document.getElementById("send_message").click();
+  }
+  document.getElementById("send_message").reset();
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #26B99A;
+  color: white;
+}
+</style>
+
+<form align=center method="post">
+
+  {{form.hidden_tag()}}
+  {{form.select1.label}}{{form.select1(placeholder='Type in Full Name')}}
+  {{form.submit()}}
+
+</form>
+
+
+
+
+  <h2 align = 'center'>LEAGUE LEADERS 19/20</h2>
+<div class="container">
+
+
+  <table id="customers">
+    <tr>
+      <th>Name</th>
+      <th>Team</th>
+      <th>GP</th>
+      <th>MPG</th>
+      <th>FGM</th>
+      <th>FGA</th>
+      <th>FG%</th>
+      <th>3 PM</th>
+      <th>3 ATT</th>
+      <th>3 PT%</th>
+      <th>FTM</th>
+      <th>FTA</th>
+      <th>FT%</th>
+      <th>OREB</th>
+      <th>DREB</th>
+      <th>REB</th>
+      <th>AST</th>
+      <th>STL</th>
+      <th>BLK</th>
+      <th>TOV</th>
+      <th>PPG</th>
+    </tr>
+    {% for player in today.items %}
+    <tr>
+      <td>{{player.stats.name}}</td>
+      <td>{{player.team}}</td>
+			<td>{{player.gamesplayed}}</td>
+      <td>{{player.averageMin}}</td>
+      <td>{{player.fgm}}</td>
+      <td>{{player.fga}}</td>
+      <td>{{player.fgpct}}</td>
+      <td>{{player.treepm}}</td>
+      <td>{{player.treeatt}}</td>
+      <td>{{player.treepct}}</td>
+      <td>{{player.ftm}}</td>
+      <td>{{player.fta}}</td>
+      <td>{{player.ftpct}}</td>
+      <td>{{player.oreb}}</td>
+      <td>{{player.dreb}}</td>
+      <td>{{player.reb}}</td>
+      <td>{{player.ast}}</td>
+      <td>{{player.stl}}</td>
+      <td>{{player.blk}}</td>
+      <td>{{player.tov}}</td>
+      <td>{{player.ppg}}</td>
+
+    </tr>
+    {% endfor %}
+
+  </table>
+  </div>
+
+	<nav aria-label="Page navigation example">
+	  <ul class="pagination justify-content-center">
+	    {# http://flask.pocoo.org/snippets/44/ #}
+
+	    {% for page_num in today.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+	            {% if today.page == page_num %}
+	              <li class="page-item disabled">
+	                <a class="page-link" href="{{ url_for('core.current_year', page=page_num) }}">{{ page_num }}</a></li>
+	              </li>
+	            {% else %}
+	              <li class="page-item"><a class="page-link" href="{{ url_for('core.current_year', page=page_num) }}">{{ page_num }}</a></li>
+	            {% endif %}
+	    {% endfor %}
+	</nav>
+
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-chart">
+
+      </div>
+
+
+
+    <script>
+    function showChart(value) {
+        var myBarChart = new Chart($("#myChart"), {
+            type: 'bar',
+            data: {
+              labels: ["Games Played" , "Average Min", "FGM", "FGA", "FG %",
+             "3PM", "3PA", "3PT %", "FTM", "FTA", "FT %", "REB", "AST", "STL", "BLK", "TOV", "PPG"],
+                datasets: [{
+                    label: value.player_onename,
+                    data: value.player_o,
+                    backgroundColor:  '#26B99A'
+                  },
+                  {
+                    label: value.player_twoname,
+                    data: value.player_t,
+                    backgroundColor: "#03586A"
+
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+    $(document).ready(function() {
+        $('#chart-form').on('submit', function(event) {
+            $.ajax({
+                data: {
+                    selectFieldone: $('#selectFieldone').val(),
+                    selectFieldtwo: $('#selectFieldtwo').val(),
+
+                },
+                type: 'POST',
+                url: '/process',
+                success: function(result) {
+                    showChart(result);
+                    $("#isplayerone").attr("src", result.first);
+                    $("#isplayertwo").attr("src", result.second);
+
+                }
+            });
+            event.preventDefault();
+        });
+    });
+    </script>
+
+    <div class="container">
+  <canvas  aling='center' id="myChart" width="500" height="300"></canvas>
+</div>
+<div class="container" align='center'>
+  <img src="" id="isplayerone">
+  VS
+  <img src="" id='isplayertwo'>
+</div>
+
+<div class="container" align='center'>
+  <form id="chart-form" class="form-group">
+      <label for="selectField">Select a player</label>
+      <select class="form-control" id="selectFieldone">
+        {% for player in myPlayer %}
+        <option value="{{player.id}}">{{player.name}}</option>
+        {% endfor %}
+      </select>
+      <label for="selectField">Select a player</label>
+      <select class="form-control" id="selectFieldtwo">
+        {% for player in myPlayer %}
+        <option value="{{player.id}}">{{player.name}}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</form>
+
+
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #26B99A;
+  color: white;
+}
+</style>
+<div class="container">
+
+
+  <h2 align = 'center'>LEAGUE LEADERS 2018/19</h2>
+
+  <table id="customers">
+    <tr>
+      <th>Name</th>
+      <th>Team</th>
+      <th>GP</th>
+      <th>MPG</th>
+      <th>FGM</th>
+      <th>FGA</th>
+      <th>FG%</th>
+      <th>3 PM</th>
+      <th>3 ATT</th>
+      <th>3 PT%</th>
+      <th>FTM</th>
+      <th>FTA</th>
+      <th>FT%</th>
+      <th>OREB</th>
+      <th>DREB</th>
+      <th>REB</th>
+      <th>AST</th>
+      <th>STL</th>
+      <th>BLK</th>
+      <th>TOV</th>
+      <th>PPG</th>
+    </tr>
+    {% for player in myPlayer %}
+    <tr>
+      <td>{{player.Name}}</td>
+      <td>{{player.Team}}</td>
+      <td>{{player.Gamesplayed}}</td>
+      <td>{{player.AverageMin}}</td>
+      <td>{{player.FGM}}</td>
+      <td>{{player.FGA}}</td>
+      <td>{{player.FG_}}</td>
+      <td>{{player._3PM}}</td>
+      <td>{{player._3ATT}}</td>
+      <td>{{player._3PT_}}</td>
+      <td>{{player.FTM}}</td>
+      <td>{{player.FTA}}</td>
+      <td>{{player.FT_}}</td>
+      <td>{{player.OREB}}</td>
+      <td>{{player.DREB}}</td>
+      <td>{{player.REB}}</td>
+      <td>{{player.AST}}</td>
+      <td>{{player.STL}}</td>
+      <td>{{player.BLK}}</td>
+      <td>{{player.TOV}}</td>
+      <td>{{player.PPG}}</td>
+    </tr>
+    {% endfor %}
+
+  </table>
+</div>
+
+
+
+</div>
+{% endblock content %}
